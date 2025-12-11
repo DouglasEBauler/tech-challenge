@@ -1,0 +1,36 @@
+<div class="login-container">
+    <h2>Acesso ao Sistema</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" formControlName="email" 
+                   [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="alert alert-danger">
+                <div *ngIf="loginForm.get('email')?.errors?.['required']">E-mail is required.</div>
+                <div *ngIf="loginForm.get('email')?.errors?.['email']">E-mail is invalid.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input id="password" type="password" formControlName="password"
+                   [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="alert alert-danger">
+                <div *ngIf="loginForm.get('password')?.errors?.['required']">A senha é obrigatória.</div>
+            </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger api-error">
+            {{ errorMessage }}
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid || isLoading">
+            <span *ngIf="isLoading">Aguarde...</span>
+            <span *ngIf="!isLoading">Entrar</span>
+        </button>
+    </form>
+</div>

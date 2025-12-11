@@ -1,0 +1,156 @@
+<div class="form-container">
+  <h1>{{ pageTitle }}</h1>
+
+  @if (isLoading) {
+    <div class="loading">
+      <p>Loading data...</p>
+    </div>
+  } @else if (errorMessage) {
+    <div class="error">
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">First name</label>
+      <input id="firstName" type="text" formControlName="firstName">
+      @if (f['firstName'].invalid && (f['firstName'].dirty || f['firstName'].touched)) {
+        <div class="validation-error">
+          @if (f['firstName'].errors?.['required']) {
+            <div>First name is required.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last name</label>
+      <input id="lastName" type="text" formControlName="lastName">
+      @if (f['lastName'].invalid && (f['lastName'].dirty || f['lastName'].touched)) {
+        <div class="validation-error">
+          @if (f['lastName'].errors?.['required']) {
+            <div>Last name is required.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email">
+      @if (f['email'].invalid && (f['email'].dirty || f['email'].touched)) {
+        <div class="validation-error">
+          @if (f['email'].errors?.['required']) {
+            <div>Email is required.</div>
+          }
+          @if (f['email'].errors?.['email']) {
+            <div>Email invalid.</div>
+          }
+        </div>
+      }
+    </div>
+    
+    <div class="form-group">
+      <label for="documentNumber">Document number</label>
+      <input id="documentNumber" type="text" formControlName="documentNumber">
+      @if (f['documentNumber'].invalid && (f['documentNumber'].dirty || f['documentNumber'].touched)) {
+        <div class="validation-error">
+          @if (f['documentNumber'].errors?.['required']) {
+            <div>Document number is required.</div>
+          }
+        </div>
+      }
+    </div>
+
+    @if (!isEditMode) {
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password">
+        @if (f['password'].invalid && (f['password'].dirty || f['password'].touched)) {
+          <div class="validation-error">
+            @if (f['password'].errors?.['required']) {
+              <div>Password is required.</div>
+            }
+            @if (f['password'].errors?.['minlength']) {
+              <div>Password must have at least 8 characters.</div>
+            }
+          </div>
+        }
+      </div>
+    }
+    
+    <div class="form-group phone-array-container">
+      <label>Phones</label>
+      <div formArrayName="phones">
+        @for (phoneGroup of phones.controls; track $index) {
+          <div [formGroupName]="$index" class="phone-item-row">  
+            <select formControlName="type" class="phone-type-select">
+              <option [ngValue]="null" disabled>-- Select type --</option>
+      
+              @for (type of phoneTypes; track type.value) {
+                <option [value]="type.label">{{ type.label }}</option> 
+              }
+            </select>          
+            
+            <input type="text" formControlName="number" placeholder="Number" class="phone-number-input">
+            
+            <button type="button" class="btn btn-danger btn-remove-phone" (click)="removePhone($index)">
+                -
+            </button>
+            
+            @if (phoneGroup.get('number')?.invalid && phoneGroup.get('number')?.touched) {
+              <div class="validation-error phone-error">
+                  Invalid number.
+              </div>
+            }
+          </div>
+        }
+      </div>
+      <button type="button" class="btn btn-primary btn-add-phone" (click)="addPhone()">
+          + Add phone
+      </button>
+    </div>
+    
+    <div class="form-group">
+      <label for="role">Role</label>
+      <select id="role" formControlName="role">
+        <option value="" disabled>-- Select role --</option>
+        
+        @for (role of ['User', 'Leader', 'Director']; track role) {
+          <option [value]="role">{{ role }}</option>
+        }
+      </select>
+      
+      @if (f['role'].invalid && (f['role'].dirty || f['role'].touched)) {
+        <div class="validation-error">
+          @if (f['role'].errors?.['required']) {
+            <div>Role is required.</div>
+          }
+        </div>
+      }
+    </div>
+    
+    <div class="form-group">
+      <label for="birthDate">Birth day</label>
+      <input id="birthDate" type="date" formControlName="birthDate">
+      @if (f['birthDate'].invalid && (f['birthDate'].dirty || f['birthDate'].touched)) {
+        <div class="validation-error">
+          @if (f['birthDate'].errors?.['required']) {
+            <div>Birth day is required.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button [disabled]="employeeForm.invalid && !isLoading" type="submit" class="btn-submit">
+        Save
+      </button>
+      <button type="button" (click)="router.navigate(['/employees'])" class="btn-cancel">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+</div>

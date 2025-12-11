@@ -1,0 +1,136 @@
+:host {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #f4f7f9;
+    min-height: 100vh;
+}
+
+.detail-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px 40px;
+    max-width: 700px;
+    width: 100%;
+}
+
+h1 {
+    color: #334d6e;
+    margin-bottom: 5px;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    display: inline-block;
+    font-size: 2em;
+}
+
+h2 {
+    color: #007bff;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.info-section {
+    padding: 20px 0;
+    border-top: 1px solid #e0e6ed;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1.1em;
+    border-bottom: 1px dashed #f0f4f7;
+}
+
+.info-item strong {
+    color: #334d6e;
+    font-weight: 500;
+    flex-basis: 35%;
+}
+
+.info-item span {
+    color: #607d8b;
+    flex-basis: 60%;
+    text-align: right;
+}
+
+.loading, .error {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.loading {
+    background-color: #e0f7fa;
+    color: #00838f;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.actions-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e6ed;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+.btn-success:hover {
+    background-color: #1e7e34;
+}
+
+.form-control-view {
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    background-color: #e9ecef;
+    color: #495057;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    min-height: calc(1.5em + 0.75rem + 2px);
+    display: block;
+}
+
+.phone-item-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .phone-type-view {
+        flex: 1;
+    }
+    .phone-number-view {
+        flex: 3;
+    }
+}

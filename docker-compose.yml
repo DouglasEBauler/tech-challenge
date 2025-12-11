@@ -1,0 +1,48 @@
+services:
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: postgres_techchallenge
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  techchallenge_api:
+    build:
+      context: ./backend
+      dockerfile: src/TechChallenge.Api/Dockerfile 
+    container_name: techchallenge_api
+    restart: always
+    ports:
+      - "5000:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres_db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      postgres_db:
+        condition: service_healthy 
+
+  techchallenge_frontend:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile 
+    container_name: techchallenge_frontend
+    restart: always
+    ports:
+      - "4200:80"
+    depends_on:
+      - techchallenge_api
+
+volumes:
+  postgres_data:

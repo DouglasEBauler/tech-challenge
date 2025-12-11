@@ -1,0 +1,85 @@
+<div class="form-container">
+    <h1>Details employee</h1>
+
+    @if (isLoading) {
+        <div class="loading">
+            <p>Loading data...</p>
+        </div>
+    } @else if (errorMessage) {
+        <div class="error">
+            <p>{{ errorMessage }}</p>
+        </div>
+    }
+
+    @if (employee) {
+        <form class="employee-data-view">
+            <h2>{{ employee.firstName + ' ' + employee.lastName }}</h2>
+            
+            <div class="form-group">
+                <label>ID</label>
+                <p class="form-control-view">{{ employee.employeeId }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>First name</label>
+                <p class="form-control-view">{{ employee.firstName }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Last name</label>
+                <p class="form-control-view">{{ employee.lastName }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <p class="form-control-view">{{ employee.email }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Document number</label>
+                <p class="form-control-view">{{ employee.documentNumber }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Role</label>
+                <p class="form-control-view">{{ employee.role }}</p>
+            </div>
+
+            <div class="form-group">
+                <label>Birth day</label>
+                <p class="form-control-view">{{ employee.birthDate | date:'dd/MM/yyyy' }}</p>
+            </div>
+
+            @if (employee.managerName) {
+                <div class="form-group">
+                    <label>Manager</label>
+                    <p class="form-control-view">{{ employee.managerName }}</p>
+                </div>
+            }
+
+            @if (employee.phones && employee.phones.length > 0) {
+                <div class="form-group phone-array-container">
+                    <label>Phones</label>
+                    
+                    @for (phone of employee.phones; track $index) {
+                        <div class="phone-item-row">
+                            <p class="form-control-view phone-type-view">{{ phone.type }}</p>
+                            <p class="form-control-view phone-number-view">{{ phone.number }}</p>
+                        </div>
+                    }
+                </div>
+            }
+            
+            <div class="form-actions mt-4">
+                <a [routerLink]="['/employees']" class="btn btn-secondary">
+                    Back to Employee List
+                </a>
+                
+                <a [routerLink]="['/employees/edit', employee.employeeId]" class="btn btn-primary">
+                    Edit
+                 </a>
+            </div>
+
+        </form>
+    }
+</div>

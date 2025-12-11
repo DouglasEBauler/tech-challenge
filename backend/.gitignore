@@ -1,0 +1,17 @@
+.vs/
+*.pdb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+
+*.nupkg
+*.snk
+[Pp]ackages/
+
+TestResults/

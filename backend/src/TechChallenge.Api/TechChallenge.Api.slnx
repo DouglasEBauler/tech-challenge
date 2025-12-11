@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="../TechChallenge.Application/TechChallenge.Application.csproj" />
+  <Project Path="../TechChallenge.Domain/TechChallenge.Domain.csproj" />
+  <Project Path="../TechChallenge.Infra/TechChallenge.Infra.csproj" />
+  <Project Path="../TechChallenge.JwtService/TechChallenge.JwtService.csproj" Id="cee0934d-6fd4-4070-8789-2bbfcf779e89" />
+  <Project Path="../TechChallenge.Tests/TechChallenge.Tests.csproj" />
+  <Project Path="TechChallenge.Api.csproj" />
+</Solution>

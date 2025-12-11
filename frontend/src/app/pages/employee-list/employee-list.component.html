@@ -1,0 +1,62 @@
+<div class="employee-list">
+    <h1>Employees list</h1>
+
+    <div class="header-actions">
+        <a [routerLink]="['/employees/new']" class="btn btn-success add-btn">
+            + New employee
+        </a>
+    </div>
+
+    @if (isLoading) {
+        <div class="loading">
+            <p>Loading employees...</p>
+        </div>
+    }
+
+    @if (errorMessage) {
+        <div class="error alert alert-danger">
+            {{ errorMessage }}
+        </div>
+    }
+
+    @if (!isLoading && !errorMessage) {
+        
+        <div class="employee-grid">
+            @for (employee of employees; track employee.employeeId) {
+                <div class="employee-card">
+                    <h3>{{ employee.firstName + " " + employee.lastName }}</h3>
+                    <p><strong>Email:</strong> {{ employee.email }}</p>
+                    <p><strong>Role:</strong> {{ employee.role }}</p>
+                    <p><strong>Birth day:</strong> {{ employee.birthDate | date:'dd/MM/yyyy' }}</p>
+                    
+                    @if (employee.managerName) {
+                        <p>
+                            <strong>Manager:</strong> {{ employee.managerName }}
+                        </p>
+                    }
+                    
+                    <div class="actions">
+                        <a [routerLink]="['/employees/edit', employee.employeeId]" 
+                            class="btn btn-secondary btn-edit">
+                            Edit
+                        </a>
+                        
+                        <button 
+                            class="btn btn-danger" 
+                            (click)="onDelete(employee.employeeId, employee.firstName + ' ' + employee.lastName)">
+                            Remove
+                        </button>
+                        
+                        <a [routerLink]="['/employees', employee.employeeId]" class="btn btn-primary">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            } @empty {
+                <div class="empty">
+                    <p>No employees registered.</p>
+                </div>
+            }
+        </div>
+    }
+</div>

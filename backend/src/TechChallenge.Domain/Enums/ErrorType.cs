@@ -1,0 +1,12 @@
+﻿namespace TechChallenge.Domain.Enums;
+
+public enum ErrorType
+{
+    INVALID_INPUT,
+    HIGHER_PERMISSION,
+    INVALID_CREDENTIALS,
+    DUPLICATE_EMAIL,
+    DUPLICATE_DOCUMENT_NUMBER,
+    EMPLOYEE_NOT_FOUND,
+    EMPLOYEE_HAS_NO_FOUND_PHONES
+}
