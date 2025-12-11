@@ -16,9 +16,6 @@ export const authInterceptorFn = (
     req = req.clone({
       setHeaders: { Authorization: `Bearer ${token}` }
     });
-    console.log('Token add!', req.headers.get('Authorization'));
-  } else {
-    console.log('Token not add!');
   }
 
   return next(req).pipe(

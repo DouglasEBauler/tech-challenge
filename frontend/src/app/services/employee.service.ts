@@ -18,7 +18,7 @@ export class EmployeeService {
   getAll(): Observable<Employee[]> {
     return this.http.get<ApiResponse<Employee>>(this.apiUrl).pipe(
       map(response => {
-        return response.employes || [];
+        return response.employees || [];
       })
     );
   }

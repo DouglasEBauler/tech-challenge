@@ -85,35 +85,38 @@ Follow the steps below to set up and start the entire application environment (B
 
 ### Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [Repository URL]
-    cd TechChallenge
-    ```
-
-2.  **Restore dependencies** (Backend):
-    ```bash
-    dotnet restore
-    ```
-    
-3.  **Frontend Dependencies** (The Docker build should handle this, but for local development):
+1.  **Clone the repository:**
     ```bash
-    cd frontend
-    npm install # or yarn install
-    cd ..
+    git clone https://github.com/DouglasEBauler/tech-challenge.git
+    cd tech-challenge
     ```
+
+2.  **Configure Environment Variables:**
+    * Create a `.env` file in the root directory:
+        ```bash
+        POSTGRES_USER=postgres
+        POSTGRES_PASSWORD=postgres
+        POSTGRES_DB=techChallenge
+        ```
+3.  **Frontend Dependencies** (Optional, handled by Docker, but for local use):
+    * **Navigate to the Frontend directory:**
+        ```bash
+        cd frontend
+        ```
+    * **Install dependencies:**
+        ```bash
+        npm install # or yarn install
+        cd .. # Return to the root directory
+        ```
 
 4.  **Database Configuration and Seeding:**
     * **Run Migrations and Seed Data:** Before running the entire environment for the first time, you must apply database migrations.
         ```bash
         # Ensure only the database container is started first to run migrations:
-        docker-compose up -d postgres
+        docker-compose up -d postgres_db
         
         # Apply EF Core Migrations (requires .NET SDK locally):
-        dotnet ef database update --project TechChallenge.Infra
-        
-        # Stop the database container if you plan to run everything together next:
-        # docker-compose down
+        dotnet ef database update --project backend/src/TechChallenge.Api
         ```
     
     > **Initial Admin Access:**
@@ -122,6 +125,15 @@ Follow the steps below to set up and start the entire application environment (B
     > * **Email:** `admin@company.com`
     > * **Password:** `Admin@123`
     >
+
+### Container postgres_db vs tech_pg
+
+If you created a container manually named `tech_pg`, stop and remove it before using docker-compose:
+```bash
+docker stop tech_pg
+docker rm tech_pg
+docker-compose up -d
+```
 
 ### Running the Entire Environment (Recommended)
 

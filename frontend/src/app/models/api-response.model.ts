@@ -1,7 +1,7 @@
 import { Employee } from "./employee.model";
 
 export interface ApiResponse<T> {
-  employes?: Employee[];
+  employees?: Employee[];
   success: boolean;
   errorCode: string | null;
   errorMessage: string | null;
