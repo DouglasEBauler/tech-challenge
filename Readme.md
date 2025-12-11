@@ -25,9 +25,9 @@ The project is structured in layers to ensure separation of concerns, testabilit
 | Component | Layer | Description |
 | :--- | :--- | :--- |
 | **Backend API** | `TechChallenge.Api` | Entry point (Controllers, injection, *middlewares*). Handles authentication and exposes employee management endpoints. |
-| `TechChallenge.Application` | CQRS Handlers, Validation, and *Pipeline Behaviors*. |
-| `TechChallenge.Domain` | Business Rules (Entities, Interfaces). |
-| `TechChallenge.Infra` | Data Access (Entity Framework Core, Repositories) and external services. |
+|| `TechChallenge.Application` | CQRS Handlers, Validation, and *Pipeline Behaviors*. |
+|| `TechChallenge.Domain` | Business Rules (Entities, Interfaces). |
+|| `TechChallenge.Infra` | Data Access (Entity Framework Core, Repositories) and external services. |
 | **Frontend** | `frontend/` | Angular application responsible for the user interface, routing, and communication with the API. Includes pages for Login, Employee List, and Employee Detail. |
 
 ---
