@@ -1,9 +1,15 @@
 <div class="employee-list">
-    <h1>Employees list</h1>
+    <div class="page-header">
+        <h1>Employees list</h1>
+    </div>
 
     <div class="header-actions">
         <a [routerLink]="['/employees/new']" class="btn btn-success add-btn">
             + New employee
+        </a>
+        
+        <a class="btn btn-danger logout-btn" (click)="onLogout()">
+            Logout
         </a>
     </div>
 
@@ -37,18 +43,21 @@
                     
                     <div class="actions">
                         <a [routerLink]="['/employees/edit', employee.employeeId]" 
-                            class="btn btn-secondary btn-edit">
-                            Edit
+                            class="btn btn-secondary btn-edit"
+                            title="Edit">
+                            <i class="fas fa-edit"></i>
                         </a>
-                        
-                        <button 
-                            class="btn btn-danger" 
-                            (click)="onDelete(employee.employeeId, employee.firstName + ' ' + employee.lastName)">
-                            Remove
+    
+                        <button class="btn btn-danger" 
+                            (click)="onDelete(employee.employeeId, employee.firstName + ' ' + employee.lastName)"
+                            title="Remove">
+                                <i class="fas fa-trash"></i>
                         </button>
-                        
-                        <a [routerLink]="['/employees', employee.employeeId]" class="btn btn-primary">
-                            Details
+    
+                        <a [routerLink]="['/employees', employee.employeeId]" 
+                            class="btn btn-primary"
+                            title="Details">
+                            <i class="fas fa-eye"></i>
                         </a>
                     </div>
                 </div>

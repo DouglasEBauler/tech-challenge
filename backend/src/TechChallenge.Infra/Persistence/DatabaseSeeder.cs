@@ -15,7 +15,7 @@ public class DatabaseSeeder(AppDbContext db)
     {
         await _db.Database.MigrateAsync();
 
-        if (await _db.Employees.AnyAsync(e => e.Role == EmployeeRoleType.Director))
+        if (await _db.Employees.AnyAsync(e => e.Role == EmployeeRoleType.Admin))
             return;
 
         const string defaultDoc = "00000000000";
