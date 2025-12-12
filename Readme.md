@@ -58,10 +58,35 @@ Employee management functionalities are divided into Commands (write operations)
 
 ### Password Storage Security
 
-For security, passwords are not stored in plaintext. When an employee is created or logs in:
+For security, passwords are not stored in plaintext. The system uses **BCrypt**, an industry-standard hashing algorithm specifically designed for password storage.
 
-1.  **Creation (`CreateEmployeeCommand`):** The plain password is combined with a unique **Salt**, and then a strong **Hashing algorithm** (SHA256) is applied. Only the resulting Hash and the unique Salt are stored in the database.
-2.  **Login (`LoginCommand`):** The provided password is combined with the stored Salt from the database, hashed using the same algorithm, and the resulting hash is compared against the stored Hash.
+**Why BCrypt?**
+- **Built-in Salt:** Automatically generates and manages unique salts for each password
+- **Adaptive:** Configurable work factor (cost) that can be increased as hardware improves
+- **Slow by Design:** Deliberately slower hashing makes brute-force attacks impractical
+- **Industry Standard:** Widely adopted and battle-tested security practice
+
+**How it works:**
+
+1.  **Creation (`CreateEmployeeCommand`):** 
+    - The plain password is hashed using BCrypt with a work factor of 12
+    - BCrypt automatically generates a unique salt and incorporates it into the hash
+    - Only the resulting BCrypt hash (which includes the salt) is stored in the database
+    - Format: `$2a$12$[salt][hash]` (60 characters)
+
+2.  **Login (`LoginCommand`):** 
+    - The provided password is verified against the stored BCrypt hash
+    - BCrypt extracts the salt from the stored hash and applies it to the provided password
+    - If the resulting hash matches the stored hash, authentication succeeds
+
+**Example:**
+```csharp
+// Hashing a password (during registration)
+string hashedPassword = BCrypt.Net.BCrypt.HashPassword(plainPassword);
+
+// Verifying a password (during login)
+bool isValid = BCrypt.Net.BCrypt.Verify(plainPassword, storedHash);
+```
 
 ### JWT and Access Roles (`AuthRole`)
 
@@ -69,7 +94,24 @@ The system uses **JWT (JSON Web Tokens)**. The user's Role (`EmployeeRoleType`) 
 
 ### Sensitive Data Encryption
 
-The `DocumentNumber` is stored encrypted in the database using **AES-256**.
+The `DocumentNumber` (CPF/CNPJ) is protected using a dual-layer approach:
+
+1. **AES-256 Encryption:** The document number is encrypted before storage, ensuring data privacy and LGPD/GDPR compliance
+2. **SHA-256 Hash Index:** A separate hash of the document number is stored for efficient duplicate detection without exposing the original data
+
+**Benefits of this approach:**
+- **Performance:** Fast duplicate checks using the hash index without decrypting all records
+- **Security:** Original document numbers remain encrypted at rest
+- **Compliance:** Meets data protection regulations (LGPD/GDPR)
+- **Reversibility:** Document numbers can be decrypted when needed for display
+```csharp
+// Storage structure
+public class EmployeeEntity
+{
+    public string DocumentNumber { get; set; }     // AES-256 encrypted
+    public string DocumentNumberIndex { get; set; }  // SHA-256 hash for searches
+}
+```
 
 ---
 
