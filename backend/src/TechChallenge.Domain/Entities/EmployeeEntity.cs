@@ -11,8 +11,7 @@ public class EmployeeEntity
     public string Email { get; set; } = default!;
     public string DocumentNumber { get; set; } = default!;
     public string DocumentNumberIndex { get; set; } = default!;
-    public string PasswordHash { get; set; } = default!;
-    public string PasswordSalt { get; set; } = default!;
+    public string Password { get; set; } = default!;
     public DateTime BirthDate { get; set; }
     public List<EmployeePhoneEntity> Phones { get; set; } = [];
     public int? ManagerId { get; set; }

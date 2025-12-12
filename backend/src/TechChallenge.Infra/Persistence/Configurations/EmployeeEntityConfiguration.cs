@@ -45,12 +45,8 @@ public class EmployeeEntityConfiguration
             .IsUnique()
             .HasDatabaseName("UX_EMPLOYEE_DOCUMENT_NUMBER_INDEX");
         
-        builder.Property(x => x.PasswordHash)
-            .HasColumnName("PASSWORD_HASH")
-            .IsRequired();
-
-        builder.Property(x => x.PasswordSalt)
-            .HasColumnName("PASSWORD_SALT")
+        builder.Property(x => x.Password)
+            .HasColumnName("PASSWORD")
             .IsRequired();
 
         builder.Property(x => x.BirthDate)

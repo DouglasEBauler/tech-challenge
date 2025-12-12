@@ -64,15 +64,10 @@ namespace TechChallenge.Infra.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("MANAGER_ID");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("PASSWORD_HASH");
-
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("PASSWORD_SALT");
+                        .HasColumnName("PASSWORD");
 
                     b.Property<int>("Role")
                         .HasColumnType("integer")

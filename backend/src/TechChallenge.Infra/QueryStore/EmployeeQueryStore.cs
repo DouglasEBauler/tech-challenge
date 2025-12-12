@@ -12,8 +12,7 @@ public class EmployeeQueryStore(IDapperQueryExecutor executor) : IEmployeeQueryS
             ""LAST_NAME"" as LastName,
             ""EMAIL"" as Email,
             ""DOCUMENT_NUMBER"" as DocumentNumber,
-            ""PASSWORD_HASH"" as PasswordHash,
-            ""PASSWORD_SALT"" as PasswordSalt,
+            ""PASSWORD"" as Password,
             ""BIRTH_DATE"" as BirthDate,
             ""MANAGER_ID"" as ManagerId,
             ""ROLE"" as Role
@@ -28,8 +27,7 @@ public class EmployeeQueryStore(IDapperQueryExecutor executor) : IEmployeeQueryS
             ""LAST_NAME"" as LastName,
             ""EMAIL"" as Email,
             ""DOCUMENT_NUMBER"" as DocumentNumber,
-            ""PASSWORD_HASH"" as PasswordHash,
-            ""PASSWORD_SALT"" as PasswordSalt,
+            ""PASSWORD"" as Password,
             ""BIRTH_DATE"" as BirthDate,
             ""MANAGER_ID"" as ManagerId,
             ""ROLE"" as Role
@@ -44,8 +42,7 @@ public class EmployeeQueryStore(IDapperQueryExecutor executor) : IEmployeeQueryS
             ""LAST_NAME"" as LastName,
             ""EMAIL"" as Email,
             ""DOCUMENT_NUMBER"" as DocumentNumber,
-            ""PASSWORD_HASH"" as PasswordHash,
-            ""PASSWORD_SALT"" as PasswordSalt,
+            ""PASSWORD"" as PasswordHash,
             ""BIRTH_DATE"" as BirthDate,
             ""MANAGER_ID"" as ManagerId,
             ""ROLE"" as Role

@@ -23,7 +23,7 @@ public class UpdateEmployeeCommandHandlerTest
         _faker = new Faker("pt_BR");
     }
 
-    private UpdateEmployeeCommand CreateCommandMock(int employeeId, EmployeeRoleType authRole)
+    private UpdateEmployeeCommand CreateCommandMock(int employeeId)
     {
         var oldestReferenceDate = DateTime.UtcNow.AddYears(-18).AddDays(-1);
         var youngestReferenceDate = DateTime.UtcNow.AddYears(-25);
@@ -47,8 +47,7 @@ public class UpdateEmployeeCommandHandlerTest
     public async Task Should_CallDomainService_PersistUpdate_AndReturnOk()
     {
         var employeeToUpdateId = _faker.Random.Int(1, 99);
-        var authRole = EmployeeRoleType.Director;
-        var command = CreateCommandMock(employeeToUpdateId, authRole);
+        var command = CreateCommandMock(employeeToUpdateId);
 
         var updatedEmployeeMock = new EmployeeEntity
         {

@@ -26,7 +26,7 @@ public class EmployeeDomainService(IEmployeeQueryStore employeeQueryStore, IEmpl
         if (employeeRoleType > userAuthRole)
             throw new DomainValidationException("You cannot create a user with higher permissions", ErrorType.HIGHER_PERMISSION);
 
-        var (hash, salt) = PasswordHelper.CreateHashPassword(password);
+        var hashPassword = PasswordHelper.CreateHashPassword(password);
         var documentIndex = EncryptionHelper.CreateIndexHash(documentNumber);
         var documentEncrypted = EncryptionHelper.EncryptDocumentNumber(documentNumber);
 
@@ -40,8 +40,7 @@ public class EmployeeDomainService(IEmployeeQueryStore employeeQueryStore, IEmpl
             BirthDate = birthDate,
             ManagerId = authEmployeeId,
             Role = employeeRoleType,
-            PasswordHash = hash,
-            PasswordSalt = salt,
+            Password = hashPassword,
             Phones = [.. phones.Select(phone => new EmployeePhoneEntity
             {
                 Number = phone.Key,
@@ -118,7 +117,7 @@ public class EmployeeDomainService(IEmployeeQueryStore employeeQueryStore, IEmpl
         var employee = await _employeeQueryStore.GetByEmailAsync(email)
             ?? throw new DomainValidationException("Invalid credentials", ErrorType.INVALID_CREDENTIALS);
 
-        if (!PasswordHelper.ValidatePassword(password, employee.PasswordHash, employee.PasswordSalt))
+        if (!PasswordHelper.ValidatePassword(password, employee.Password))
             throw new DomainValidationException("Invalid credentials", ErrorType.INVALID_CREDENTIALS);
 
         return employee;

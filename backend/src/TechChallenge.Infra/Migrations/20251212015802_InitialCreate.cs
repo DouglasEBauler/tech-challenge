@@ -23,8 +23,7 @@ namespace TechChallenge.Infra.Migrations
                     EMAIL = table.Column<string>(type: "text", nullable: false),
                     DOCUMENT_NUMBER = table.Column<string>(type: "text", nullable: false),
                     DOCUMENT_NUMBER_INDEX = table.Column<string>(type: "text", nullable: false),
-                    PASSWORD_HASH = table.Column<string>(type: "text", nullable: false),
-                    PASSWORD_SALT = table.Column<string>(type: "text", nullable: false),
+                    PASSWORD = table.Column<string>(type: "text", nullable: false),
                     BIRTH_DATE = table.Column<DateTime>(type: "DATE", nullable: false),
                     MANAGER_ID = table.Column<int>(type: "integer", nullable: true),
                     ROLE = table.Column<int>(type: "integer", nullable: false)

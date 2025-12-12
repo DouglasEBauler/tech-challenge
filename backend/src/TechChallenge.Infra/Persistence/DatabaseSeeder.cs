@@ -20,7 +20,7 @@ public class DatabaseSeeder(AppDbContext db)
 
         const string defaultDoc = "00000000000";
 
-        var (hash, salt) = PasswordHelper.CreateHashPassword("Admin@123");
+        var hashPassword = PasswordHelper.CreateHashPassword("Admin@123");
         var docEncrypt = EncryptionHelper.EncryptDocumentNumber(defaultDoc);
 
         _db.Employees.Add(new EmployeeEntity
@@ -32,8 +32,7 @@ public class DatabaseSeeder(AppDbContext db)
             DocumentNumberIndex = EncryptionHelper.CreateIndexHash(defaultDoc),
             BirthDate = DateTime.UtcNow.AddYears(-30),
             Role = EmployeeRoleType.Admin,
-            PasswordHash = hash,
-            PasswordSalt = salt,
+            Password = hashPassword,
             Phones =
             [
                 new EmployeePhoneEntity { Number = "+5500000000000", Type = PhoneType.Mobile }

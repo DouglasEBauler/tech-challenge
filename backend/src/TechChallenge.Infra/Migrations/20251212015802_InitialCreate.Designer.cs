@@ -12,7 +12,7 @@ using TechChallenge.Infra.Persistence;
 namespace TechChallenge.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251211024602_InitialCreate")]
+    [Migration("20251212015802_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -67,15 +67,10 @@ namespace TechChallenge.Infra.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("MANAGER_ID");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("PASSWORD_HASH");
-
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("PASSWORD_SALT");
+                        .HasColumnName("PASSWORD");
 
                     b.Property<int>("Role")
                         .HasColumnType("integer")

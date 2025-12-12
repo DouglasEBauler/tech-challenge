@@ -42,7 +42,7 @@ public static class EncryptionHelper
         const string prefix = "ENCRYPTED_";
         if (encryptedDocumentNumber.StartsWith(prefix))
         {
-            encryptedDocumentNumber = encryptedDocumentNumber.Substring(prefix.Length);
+            encryptedDocumentNumber = encryptedDocumentNumber[prefix.Length..];
         }
         
         var buffer = Convert.FromBase64String(encryptedDocumentNumber);
