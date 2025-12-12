@@ -2,35 +2,46 @@
     <h2>Access system</h2>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
         <div class="form-group">
             <label for="email">E-mail</label>
             <input id="email" type="email" formControlName="email" 
                    [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
             
-            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="alert alert-danger">
-                <div *ngIf="loginForm.get('email')?.errors?.['required']">E-mail is required.</div>
-                <div *ngIf="loginForm.get('email')?.errors?.['email']">E-mail is invalid.</div>
-            </div>
+            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+                <div class="alert alert-danger">
+                    @if (loginForm.get('email')?.errors?.['required']) {
+                        <div>E-mail is required.</div>
+                    }
+                    @if (loginForm.get('email')?.errors?.['email']) {
+                        <div>E-mail is invalid.</div>
+                    }
+                </div>
+            }
         </div>
-
         <div class="form-group">
-            <label for="password">Senha</label>
+            <label for="password">Password</label>
             <input id="password" type="password" formControlName="password"
                    [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
             
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="alert alert-danger">
-                <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                <div class="alert alert-danger">
+                    @if (loginForm.get('password')?.errors?.['required']) {
+                        <div>Password is required.</div>
+                    }
+                </div>
+            }
+        </div>
+        @if (errorMessage) {
+            <div class="alert alert-danger api-error">
+                {{ errorMessage }}
             </div>
-        </div>
-
-        <div *ngIf="errorMessage" class="alert alert-danger api-error">
-            {{ errorMessage }}
-        </div>
-
+        }
         <button type="submit" [disabled]="loginForm.invalid || isLoading">
-            <span *ngIf="isLoading">Waiting...</span>
-            <span *ngIf="!isLoading">Sign in</span>
+            @if (isLoading) {
+                <span>Waiting...</span>
+            } @else {
+                <span>Sign in</span>
+            }
         </button>
     </form>
 </div>
