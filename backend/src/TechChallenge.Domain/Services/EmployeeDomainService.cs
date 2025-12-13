@@ -23,9 +23,9 @@ public class EmployeeDomainService(IEmployeeQueryStore employeeQueryStore, IEmpl
         EmployeeRoleType userAuthRole,
         int authEmployeeId)
     {
-        if (employeeRoleType > userAuthRole)
-            throw new DomainValidationException("You cannot create a user with higher permissions", ErrorType.HIGHER_PERMISSION);
-
+        if (employeeRoleType >= userAuthRole)
+            throw new DomainValidationException("You cannot create a user with higher or equal permissions", ErrorType.HIGHER_PERMISSION);
+        
         var hashPassword = PasswordHelper.CreateHashPassword(password);
         var documentIndex = EncryptionHelper.CreateIndexHash(documentNumber);
         var documentEncrypted = EncryptionHelper.EncryptDocumentNumber(documentNumber);
@@ -55,7 +55,7 @@ public class EmployeeDomainService(IEmployeeQueryStore employeeQueryStore, IEmpl
             ?? throw new DomainValidationException("Employee not found", ErrorType.INVALID_INPUT);
 
         if (employeeUpdate.Role > userAuthRole)
-            throw new DomainValidationException("You cannot create a user with higher permissions", ErrorType.HIGHER_PERMISSION);
+            throw new DomainValidationException("You cannot update a user with higher permissions", ErrorType.HIGHER_PERMISSION);
 
         var documentEncrypted = EncryptionHelper.EncryptDocumentNumber(documentNumber);
         var documentIndex = EncryptionHelper.CreateIndexHash(documentNumber);
@@ -82,24 +82,27 @@ public class EmployeeDomainService(IEmployeeQueryStore employeeQueryStore, IEmpl
             ?? throw new DomainValidationException("Employee not found", ErrorType.INVALID_INPUT);
 
         if (employeeDelete.Role > userAuthRole)
-            throw new DomainValidationException("You cannot create a user with higher permissions", ErrorType.HIGHER_PERMISSION);
+            throw new DomainValidationException("You cannot delete a user with higher permissions", ErrorType.HIGHER_PERMISSION);
+
+        if (employeeDelete.ManagerId == null)
+            throw new DomainValidationException("Cannot delete the root administrator", ErrorType.CANNOT_DELETE_ROOT_ADMIN);
 
         return employeeDelete;
     }
 
     public async Task<List<EmployeeEntity>> GetAllAsync(EmployeeRoleType userAuthRole, int authEmployeeId)
     {
-        if (EmployeeRoleType.User >= userAuthRole)
-            throw new DomainValidationException("You cannot create a user with higher permissions", ErrorType.HIGHER_PERMISSION);
-
+        if (userAuthRole < EmployeeRoleType.Leader)
+            throw new DomainValidationException("Only leaders and directors can list employees", ErrorType.INSUFFICIENT_PERMISSIONS);
+        
         return await _employeeQueryStore.GetAllAsync(authEmployeeId)
             ?? throw new DomainValidationException("Employee not found", ErrorType.INVALID_INPUT);
     }
 
     public async Task<EmployeeEntity> GetByIdAsync(int employeeId, EmployeeRoleType userAuthRole)
     {
-        if (EmployeeRoleType.User >= userAuthRole)
-            throw new DomainValidationException("You cannot create a user with higher permissions", ErrorType.HIGHER_PERMISSION);
+        if (userAuthRole < EmployeeRoleType.Leader)
+            throw new DomainValidationException("Only leaders and directors can list employees", ErrorType.INSUFFICIENT_PERMISSIONS);
 
         var employee = await _employeeQueryStore.GetByIdAsync(employeeId)
             ?? throw new DomainValidationException("Employee not found", ErrorType.EMPLOYEE_NOT_FOUND);
